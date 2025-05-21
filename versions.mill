@@ -1,0 +1,5 @@
+package build
+
+val scalaVersion = "3.7.0"
+val scalatestVersion = "3.2.19"
+val catsEffectVersion = "3.7-4972921"

@@ -1,0 +1,31 @@
+.DS_Store
+*.class
+*.log
+*~
+
+# idea
+.idea
+.idea_modules
+/.worksheet/
+
+# mill
+out/
+
+.bsp/
+.metals/
+.vscode/
+.bloop/
+
+# SBT
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+.history
+.cache
+.lib/
+
+# virtual machine crash logs
+hs_err_pid*
