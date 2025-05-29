@@ -34,8 +34,8 @@ done
 if (( no_test == 0 )); then
   if [[ -z "$1" ]]; then
     ./mill __.test
-  elif ./mill resolve modules["$1"].__.test &>/dev/null; then
-    ./mill modules["$1"].__.test
+  elif ./mill resolve "$1".__.test &>/dev/null; then
+    ./mill "$1".__.test
   else
     red='\033[0;31m'
     no_color='\033[0m'
@@ -45,10 +45,10 @@ fi
 
 if (( no_lint == 0 )); then
 	if [[ -z "${CI}" ]]; then
-	  ./mill modules[_].__.fix
-	  ./mill mill.scalalib.scalafmt.ScalafmtModule/reformatAll modules[_].__.sources
+	  ./mill __.fix
+	  ./mill mill.scalalib.scalafmt.ScalafmtModule/reformatAll __.sources
 	else
-		./mill modules[_].__.fix --check
-		./mill mill.scalalib.scalafmt.ScalafmtModule/checkFormatAll modules[_].__.sources
+		./mill __.fix --check
+		./mill mill.scalalib.scalafmt.ScalafmtModule/checkFormatAll __.sources
 	fi
 fi

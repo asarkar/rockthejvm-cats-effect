@@ -1,7 +1,11 @@
-import Threads.showThread
+package effects
+
 import cats.Parallel
 import cats.effect.IO
 import cats.effect.IOApp
+import utils.Threads.showThread
+
+import scala.concurrent.duration.DurationInt
 
 object IOParallelism extends IOApp.Simple:
   // IOs are usually sequential
@@ -45,7 +49,8 @@ object IOParallelism extends IOApp.Simple:
   val twoFailures: IO[String] = (aFailure.showThread(), anotherFailure.showThread()).parMapN(_ + _)
   // the first effect to fail gives the failure of the result
   val twoFailuresDelayed: IO[String] =
-    (IO(Thread.sleep(1000)) >> aFailure.showThread(), anotherFailure.showThread()).parMapN(_ + _)
+    (IO.sleep(1.second).flatMap(_ => aFailure.showThread()), anotherFailure.showThread())
+      .parMapN(_ + _)
 
   override def run: IO[Unit] =
     twoFailuresDelayed.showThread().void

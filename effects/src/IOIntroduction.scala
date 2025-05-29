@@ -1,3 +1,5 @@
+package effects
+
 import cats.effect.IO
 
 import scala.io.StdIn

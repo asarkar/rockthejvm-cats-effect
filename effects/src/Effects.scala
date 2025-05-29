@@ -1,3 +1,5 @@
+package effects
+
 import scala.concurrent.Future
 import scala.io.StdIn.readLine
 

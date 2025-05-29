@@ -1,4 +1,7 @@
-import Effects.*
+package effects
+
+import effects.Effects.MyIO
+import effects.Effects.measures
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers.be
 import org.scalatest.matchers.should.Matchers.should

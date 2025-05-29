@@ -1,3 +1,5 @@
+package utils
+
 import cats.effect.IO
 
 object Threads:

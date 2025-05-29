@@ -1,31 +1,18 @@
 package build
 
-import mill._, scalalib._, scalafmt._
-import $packages._
-import $file.{versions => v}
-import java.nio.file.Files
+import build_.{versions => v}
+import mill._
+import scalalib._
 import $ivy.`com.goyeau::mill-scalafix::0.5.1`
 import com.goyeau.mill.scalafix.ScalafixModule
-import mill.scalalib._
-
-def shouldInclude(p: os.Path) = os.isDir(p) && !Files.isHidden(p.wrapped) && p.last != "out"
-
-def moduleNames = interp.watchValue(
-    os.walk(millSourcePath, !shouldInclude(_), maxDepth = 1)
-      .map(_.last)
-)
+import mill.scalalib.scalafmt.ScalafmtModule
 
 trait LintModule extends ScalafmtModule with ScalafixModule
 
-object modules extends Cross[CatsEffectModule](moduleNames)
+trait CatsEffectModule extends ScalaModule with LintModule {
+  override def scalaVersion: T[String] = v.scalaVersion
 
-trait CatsEffectModule extends ScalaModule with Cross.Module[String] with LintModule {
-
-  val scalaVersion = v.scalaVersion
-  // Ends with 'modules' that need to be removed
-  def millSourcePath = super.millSourcePath / os.up / crossValue
-
-  def scalacOptions: T[Seq[String]] = Seq(
+  override def scalacOptions: T[Seq[String]] = Seq(
     "-encoding",
     "UTF-8",
     "-feature",
@@ -38,16 +25,26 @@ trait CatsEffectModule extends ScalaModule with Cross.Module[String] with LintMo
     "-rewrite",
     "-source",
     "future",
-//    "-Xprint:typer"
+    //    "-Xprint:typer"
   )
 
-  def ivyDeps = Agg(
-     ivy"org.typelevel::cats-effect:${v.catsEffectVersion}"
-   )
+  override def ivyDeps: T[Agg[Dep]] = Agg(
+    ivy"org.typelevel::cats-effect:${v.catsEffectVersion}"
+  )
 
   object test extends ScalaTests with TestModule.ScalaTest with LintModule {
-   def ivyDeps = Agg(
-     ivy"org.scalatest::scalatest:${v.scalatestVersion}"
-   )
+    override def ivyDeps: T[Agg[Dep]] = Agg(
+      ivy"org.scalatest::scalatest:${v.scalatestVersion}"
+    )
   }
+}
+
+object utils extends CatsEffectModule
+
+object effects extends CatsEffectModule {
+  def moduleDeps: Seq[JavaModule] = Seq(utils)
+}
+
+object concurrency extends CatsEffectModule {
+  def moduleDeps: Seq[JavaModule] = Seq(utils)
 }

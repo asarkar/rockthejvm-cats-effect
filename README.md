@@ -25,16 +25,16 @@ Official GitHub repo: https://github.com/rockthejvm/cats-effect
 - IO: Recap
 
 ### Cats Effect Concurrency
-- Fibers
-- Fibers: Exercises
+- [Fibers](concurrency/src/Fibers.scala)
+- [Fibers: Exercises](concurrency/src/Fibers.scala)
 - How Fibers Work
-- The Bracket Pattern
-- Resources
-- IO Concurrency: Racing
-- IO Concurrency: Cancellation
-- IO Concurrency: Cancellation (exercises)
-- IO Concurrency: Blocking
-- IO Concurrency: Async
+- [The Bracket Pattern](concurrency/src/Resources.scala)
+- [Resources](concurrency/src/Resources.scala)
+- [IO Concurrency: Racing](concurrency/src/RacingIOs.scala)
+- [IO Concurrency: Cancellation](concurrency/src/CancellingIOs.scala)
+- [IO Concurrency: Cancellation (exercises)](concurrency/src/CancellingIOs.scala)
+- [IO Concurrency: Blocking](concurrency/src/BlockingIOs.scala)
+- [IO Concurrency: Async](concurrency/src/AsyncIOs.scala)
 
 ### Cats Effect Concurrent Coordination
 - Ref

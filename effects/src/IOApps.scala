@@ -1,3 +1,5 @@
+package effects
+
 import cats.effect.ExitCode
 import cats.effect.IO
 import cats.effect.IOApp

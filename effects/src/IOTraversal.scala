@@ -1,8 +1,11 @@
+package effects
+
 import cats.Traverse
 import cats.effect.IO
 import cats.effect.IOApp
 
 import scala.concurrent.Future
+import scala.concurrent.duration.DurationInt
 import scala.util.Random
 
 object IOTraversal extends IOApp.Simple:
@@ -29,13 +32,13 @@ object IOTraversal extends IOApp.Simple:
     // ^^ this stores ALL the results
     singleFuture.foreach(println)
 
-  import Threads.showThread
+  import utils.Threads.showThread
 
   // traverse for IO
-  def computeAsIO(string: String): IO[Int] = IO {
-    Thread.sleep(Random.nextInt(1000))
-    string.split(" ").length
-  }.showThread()
+  def computeAsIO(string: String): IO[Int] =
+    IO.sleep(Random.nextInt(1000).millis)
+      .map(_ => string.split(" ").length)
+      .showThread()
 
   val ios: List[IO[Int]]      = workLoad.map(computeAsIO)
   val singleIO: IO[List[Int]] = listTraverse.traverse(workLoad)(computeAsIO)
