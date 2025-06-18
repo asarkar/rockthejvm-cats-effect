@@ -37,16 +37,16 @@ Official GitHub repo: https://github.com/rockthejvm/cats-effect
 - [IO Concurrency: Async](concurrency/src/AsyncIOs.scala)
 
 ### Cats Effect Concurrent Coordination
-- Ref
-- Ref: Exercises
-- Deferred
-- Deferred: Exercises
-- Ref + Deferred Exercise: A Purely Functional Mutex
-- Ref + Deferred Exercise: A Purely Functional Mutex, Part 2
-- Semaphore
-- CountDownLatch
-- CountDownLatch Exercise: Writing Our Own
-- CyclicBarrier
+- [Ref](coordination/src/Refs.scala)
+- [Ref: Exercises](coordination/src/Refs.scala)
+- [Deferred](coordination/src/Defers.scala)
+- [Deferred: Exercises](coordination/src/Defers.scala)
+- [Ref + Deferred Exercise: A Purely Functional Mutex](coordination/src/Mutex.scala)
+- [Ref + Deferred Exercise: A Purely Functional Mutex, Part 2](coordination/src/Mutex.scala)
+- [Semaphore](coordination/src/Semaphores.scala)
+- [CountDownLatch](coordination/src/CountdownLatches.scala)
+- [CountDownLatch Exercise: Writing Our Own](coordination/src/CountdownLatches.scala)
+- [CyclicBarrier](coordination/src/CyclicBarriers.scala)
 
 ### Polymorphic Effects
 - Polymorphic Cancellation: MonadCancel

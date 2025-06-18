@@ -44,7 +44,7 @@ object IOTraversal extends IOApp.Simple:
   val singleIO: IO[List[Int]] = listTraverse.traverse(workLoad)(computeAsIO)
 
   // parallel traversal
-  import cats.implicits.catsSyntaxParallelTraverse1
+  import cats.syntax.parallel.catsSyntaxParallelTraverse1
   val parallelSingleIO: IO[List[Int]] = workLoad.parTraverse(computeAsIO)
 
   // Exercises

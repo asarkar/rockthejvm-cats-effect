@@ -48,3 +48,7 @@ object effects extends CatsEffectModule {
 object concurrency extends CatsEffectModule {
   def moduleDeps: Seq[JavaModule] = Seq(utils)
 }
+
+object coordination extends CatsEffectModule {
+  def moduleDeps: Seq[JavaModule] = Seq(utils)
+}

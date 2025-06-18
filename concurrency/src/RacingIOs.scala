@@ -35,13 +35,10 @@ object RacingIOs extends IOApp.Simple:
       case Right(lang) => IO(s"Fav language won: $lang")
 
   /*
-  I'm not sure why we need the upper bound, instead of simply `Int | String`.
-  Probably because of this:
-  > The compiler assigns a union type to an expression only if such a type is explicitly given.
-
-  So, `IO(outMol)` is treated as `IO[Int]` and not `IO[Int | String]`. Using the upper bound means any
-  type that fits inside the union `Int | String`, including `Int`, `String`, or the union itself, so,
-  the types check out.
+  We need the upper bound, instead of simply `Int | String` because `Outcome` is invariant.
+  Using the upper bound means any type that fits inside the union `Int | String`, including
+  `Int`, `String`, or the union itself.
+  https://users.scala-lang.org/t/union-type-counterintuitive-behavior/10790
    */
   def testRacePair(): IO[Outcome[IO, Throwable, ? <: Int | String]] =
     val meaningOfLife = runWithSleep(42, 1.second)
