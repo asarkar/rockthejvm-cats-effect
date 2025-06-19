@@ -49,14 +49,14 @@ Official GitHub repo: https://github.com/rockthejvm/cats-effect
 - [CyclicBarrier](coordination/src/CyclicBarriers.scala)
 
 ### Polymorphic Effects
-- Polymorphic Cancellation: MonadCancel
-- Polymorphic Cancellation: Exercise
-- Polymorphic Fibers: Spawn
-- Polymorphic Coordination: Concurrent
-- Polymorphic Coordination: Exercise
-- Polymorphic Timeouts: Temporal
-- Polymorphic Synchronous Effects: Sync
-- Polymorphic Asynchronous Effects: Async
+- [Polymorphic Cancellation: MonadCancel](polymorphic/src/PolymorphicCancellation.scala)
+- [Polymorphic Cancellation: Exercise](polymorphic/src/PolymorphicCancellation.scala)
+- [Polymorphic Fibers: Spawn](polymorphic/src/PolymorphicFibers.scala)
+- [Polymorphic Coordination: Concurrent](polymorphic/src/PolymorphicCoordination.scala)
+- [Polymorphic Coordination: Exercise](polymorphic/src/PolymorphicCoordination.scala)
+- [Polymorphic Timeouts: Temporal](polymorphic/src/PolymorphicTemporalSuspension.scala)
+- [Polymorphic Synchronous Effects: Sync](polymorphic/src/PolymorphicSync.scala)
+- [Polymorphic Asynchronous Effects: Async](polymorphic/src/PolymorphicAsync.scala)
 
 ### Errata
 - Mutex Locking Bug Fix
@@ -67,8 +67,8 @@ Official GitHub repo: https://github.com/rockthejvm/cats-effect
 ./.github/run.sh
 ```
 
-To run all tests from a package:
+To run all tests from a module:
 ```
-./.github/run.sh <package prefix>
+./.github/run.sh <module>
 ```
 
