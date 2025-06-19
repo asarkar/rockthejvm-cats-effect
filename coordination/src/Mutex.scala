@@ -33,7 +33,11 @@ object Mutex:
 
           val cleanup = state.modify { case State(locked, queue) =>
             val newQueue = queue.filterNot(_ eq signal)
-            State(locked, newQueue) -> release
+            // Mutex locking bug fix
+            // If signal is present in the queue, some other fiber has acquired the mutex
+            val blocked  = queue.exists(_ eq signal)
+            val decision = if blocked then IO.unit else release
+            State(locked, newQueue) -> decision
           }.flatten
 
           state.modify {
@@ -105,7 +109,10 @@ object MutexV2:
 
           val cleanup = state.modify { case State(locked, queue) =>
             val newQueue = queue.filterNot(_ eq signal)
-            State(locked, newQueue) -> release
+            // Mutex locking bug fix
+            val blocked  = queue.exists(_ eq signal)
+            val decision = if blocked then concurrent.unit else release
+            State(locked, newQueue) -> decision
           }.flatten
 
           state.modify {
@@ -179,5 +186,29 @@ object MutexPlayground extends IOApp.Simple:
       mutex   <- MutexV2.create[IO]
       results <- (1 to 10).toList.parTraverse(id => createCancellingTask(id, mutex))
     yield results
+
+  // Mutex locking bug demo
+  def demoCancelWhileBlocked(): IO[Unit] =
+    for
+      mutex <- Mutex.create
+      fib1 <- (IO("[fib1] getting mutex").debug() >>
+        mutex.acquire >>
+        IO("[fib1] got the mutex, never releasing").debug() >>
+        IO.never).start
+      fib2 <- (IO("[fib2] sleeping").debug() >>
+        IO.sleep(1.second) >>
+        IO("[fib2] trying to get the mutex").debug() >>
+        mutex.acquire >>
+        IO("[fib2] acquired mutex").debug()).start
+      fib3 <- (IO("[fib3] sleeping").debug() >>
+        IO.sleep(1500.millis) >>
+        IO("[fib3] trying to get the mutex").debug() >>
+        mutex.acquire >>
+        IO("[fib3] if this shows, then FAIL").debug()).start
+      _ <- IO.sleep(2.seconds) >> IO("CANCELING fib2!").debug() >> fib2.cancel
+      _ <- fib1.join
+      _ <- fib2.join
+      _ <- fib3.join
+    yield ()
 
   override def run: IO[Unit] = demoCancellingTasks().debug().void
