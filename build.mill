@@ -49,8 +49,6 @@ object concurrency extends CatsEffectModule {
   def moduleDeps: Seq[JavaModule] = Seq(utils)
 }
 
-object coordination extends CatsEffectModule {
-  def moduleDeps: Seq[JavaModule] = Seq(utils)
-}
+object coordination extends CatsEffectModule
 
 object polymorphic extends CatsEffectModule
