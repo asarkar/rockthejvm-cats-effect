@@ -13,7 +13,7 @@ import scala.collection.immutable.Queue
 import scala.concurrent.duration.DurationInt
 import scala.util.Random
 
-abstract class Mutex:
+trait Mutex:
   def acquire: IO[Unit]
   def release: IO[Unit]
 
@@ -86,7 +86,7 @@ object Mutex:
     }.flatten
 
 // generic mutex after the polymorphic concurrent exercise
-abstract class MutexV2[F[_]]:
+trait MutexV2[F[_]]:
   def acquire: F[Unit]
   def release: F[Unit]
 

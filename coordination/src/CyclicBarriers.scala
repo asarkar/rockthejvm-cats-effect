@@ -49,7 +49,7 @@ object CyclicBarriers extends IOApp.Simple:
 
   override def run: IO[Unit] = openNetwork()
 
-  abstract class CBarrier:
+  trait CBarrier:
     def await: IO[Unit]
 
   object CBarrier:

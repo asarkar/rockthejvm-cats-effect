@@ -124,8 +124,7 @@ object CountdownLatches extends IOApp.Simple:
 
   /** Exercise: implement your own CDLatch with Ref and Deferred.
     */
-
-  abstract class CDLatch:
+  trait CDLatch:
     def await: IO[Unit]
 
     def release: IO[Unit]
